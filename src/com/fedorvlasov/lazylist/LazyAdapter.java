@@ -12,19 +12,20 @@ import android.widget.TextView;
 public class LazyAdapter extends BaseAdapter {
     
     private Activity activity;
-    private String[] data;
+    private String[] links, names;
     private static LayoutInflater inflater=null;
     public ImageLoader imageLoader; 
     
-    public LazyAdapter(Activity a, String[] d) {
+    public LazyAdapter(Activity a, String[] imageLinks, String[] text) {
         activity = a;
-        data=d;
+        names = text; 
+        links = imageLinks;
         inflater = (LayoutInflater)activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         imageLoader=new ImageLoader(activity.getApplicationContext());
     }
 
     public int getCount() {
-        return data.length;
+        return links.length;
     }
 
     public Object getItem(int position) {
@@ -40,10 +41,10 @@ public class LazyAdapter extends BaseAdapter {
         if(convertView==null)
             vi = inflater.inflate(R.layout.item, null);
 
-        TextView text=(TextView)vi.findViewById(R.id.text);;
-        ImageView image=(ImageView)vi.findViewById(R.id.image);
-        text.setText("item "+position);
-        imageLoader.DisplayImage(data[position], image);
+        TextView text = (TextView) vi.findViewById(R.id.text);;
+        ImageView image = (ImageView) vi.findViewById(R.id.image);
+        text.setText(names[position]);
+        imageLoader.DisplayImage(links[position], image);
         return vi;
     }
 }
